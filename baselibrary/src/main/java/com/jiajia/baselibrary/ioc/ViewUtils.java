@@ -1,4 +1,4 @@
-package com.jiajia.baselibrary;
+package com.jiajia.baselibrary.ioc;
 
 import android.app.Activity;
 import android.content.Context;

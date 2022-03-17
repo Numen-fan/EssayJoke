@@ -1,4 +1,4 @@
-package com.jiajia.baselibrary;
+package com.jiajia.baselibrary.ioc;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

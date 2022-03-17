@@ -1,30 +1,42 @@
 package com.jiajia.essayjoke;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jiajia.baselibrary.CheckNet;
-import com.jiajia.baselibrary.OnClick;
-import com.jiajia.baselibrary.ViewById;
-import com.jiajia.baselibrary.ViewUtils;
 
-public class MainActivity extends AppCompatActivity {
+import com.jiajia.baselibrary.ioc.CheckNet;
+import com.jiajia.baselibrary.ioc.OnClick;
+import com.jiajia.baselibrary.ioc.ViewById;
+import com.jiajia.framelibrary.BaseSkinActivity;
+
+public class MainActivity extends BaseSkinActivity {
 
     @ViewById(R.id.test_tv)
     private TextView mTestTv;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
 
-        ViewUtils.inject(this);
+    @Override
+    protected void initTitle() {
 
-        mTestTv.setText("通过注解设置的值");
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
 
     }
 
