@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "EssayJoke"
 include ':app'
 include ':baselibrary'
+include ':framelibrary'

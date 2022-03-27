@@ -50,6 +50,5 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void startActivity(Class<?> clazz) {
         Intent intent = new Intent(this, clazz);
         startActivity(intent);
-
     }
 }

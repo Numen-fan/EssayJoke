@@ -128,7 +128,7 @@ public class ViewUtils {
             } catch (Exception e) {
                 try {
                     // 为了兼容不传view的参数，这里再次执行一下无参的method
-                    mMethod.invoke(mHandler, null);
+                    mMethod.invoke(mHandler, (Object) null);
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }

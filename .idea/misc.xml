@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/bg_comment_submit.xml" value="0.1175" />
+        <entry key="app/src/main/res/drawable/bg_detail_comment_editor.xml" value="0.1175" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15476190476190477" />
+        <entry key="app/src/main/res/layout/activity_test.xml" value="0.20516304347826086" />
+        <entry key="app/src/main/res/layout/detail_comment_dialog.xml" value="0.20108695652173914" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.127" />
       </map>
     </option>
   </component>
