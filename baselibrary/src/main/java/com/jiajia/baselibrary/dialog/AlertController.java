@@ -19,8 +19,8 @@ import java.util.Map;
 
 class AlertController {
 
-    private AlertDialog mDialog;
-    private Window mWindow;
+    private final AlertDialog mDialog;
+    private final Window mWindow;
 
     private DialogViewHelper mViewHelper;
 

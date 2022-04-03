@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
 
-    <color name="comment_dialog_bg">#fff5f0ec</color>
-    <color name="comment_dialog_content_text">#ff5c6266</color>
-    <color name="list_item_divider">#ffe6e6e6</color>
-    <color name="comment_dialog_share_text">#ff333333</color>
-    <color name="comment_dialog_submit_text">#ffffffff</color>
+    <color name="comment_dialog_bg">#FFF5F0EC</color>
+    <color name="comment_dialog_content_text">#FF5C6266</color>
+    <color name="list_item_divider">#FFE6E6E6</color>
+    <color name="comment_dialog_share_text">#FF333333</color>
+    <color name="comment_dialog_submit_text">#FFFFFFFF</color>
 </resources>

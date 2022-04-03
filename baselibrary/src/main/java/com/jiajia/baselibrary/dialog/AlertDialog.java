@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference;
  */
 public class AlertDialog extends Dialog {
 
-    private AlertController mAlert;
+    private final AlertController mAlert;
 
     public AlertDialog(@NonNull Context context, int themeResId) {
         super(context, themeResId);

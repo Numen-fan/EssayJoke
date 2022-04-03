@@ -1,5 +1,6 @@
 package com.jiajia.essayjoke;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -10,11 +11,13 @@ import com.jiajia.baselibrary.ioc.CheckNet;
 import com.jiajia.baselibrary.ioc.OnClick;
 import com.jiajia.baselibrary.ioc.ViewById;
 import com.jiajia.framelibrary.BaseSkinActivity;
+import com.jiajia.framelibrary.DefaultNavigationBar;
 
 public class MainActivity extends BaseSkinActivity {
 
     private static final String TAG = "MainActivity";
 
+    @SuppressLint("NonConstantResourceId")
     @ViewById(R.id.test_tv)
     private TextView mTestTv;
 
@@ -25,7 +28,12 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     protected void initTitle() {
-
+        DefaultNavigationBar navigationBar =
+                new DefaultNavigationBar.Builder(this)
+                        .setTitle("投稿")
+                        .setRightText("发布")
+                        .setRightClickListener(v -> Toast.makeText(MainActivity.this , "发布了", Toast.LENGTH_SHORT).show())
+                        .builder();
     }
 
     @Override
