@@ -37,9 +37,11 @@ public class HttpUtils{
         mHttpEngine = httpEngine;
     }
 
-    // 更换Engine
-    public void exchangeEngine(IHttpEngine httpEngine) {
+    // 更换Engine, 某一个请求，切换一个引擎。
+    public HttpUtils exchangeEngine(IHttpEngine httpEngine) {
         mHttpEngine = httpEngine;
+        return this;
+
     }
 
     // ========== start of 链式调用 ============
@@ -86,6 +88,9 @@ public class HttpUtils{
         if (callBack == null) {
             callBack = EngineCallBack.DEFAULT_CALLBACK;
         }
+
+        callBack.onPreExecute(mContext, mParams);
+
         // 判断执行方法
         if (mType == POST) {
             post(mUrl, mParams, callBack);
