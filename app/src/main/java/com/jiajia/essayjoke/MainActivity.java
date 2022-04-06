@@ -7,6 +7,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jiajia.baselibrary.dialog.AlertDialog;
+import com.jiajia.baselibrary.http.EngineCallBack;
+import com.jiajia.baselibrary.http.HttpUtils;
 import com.jiajia.baselibrary.ioc.CheckNet;
 import com.jiajia.baselibrary.ioc.OnClick;
 import com.jiajia.baselibrary.ioc.ViewById;
@@ -48,6 +50,8 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     protected void initData() {
+
+        HttpUtils.with(this).url("https://www.baidu.com").execute();
 
     }
 
