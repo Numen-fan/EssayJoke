@@ -58,38 +58,40 @@ public class MainActivity extends BaseSkinActivity {
     protected void initData() {
 
         // 路径 和 参数都需要放大JNI中，因为反编译会有问题
-        HttpUtils.with(this).url("http://is.snssdk.com/2/essay/discovery/v3/")
-                .addParam("iid", "6152551759")
-                .addParam("aid", "7")
-                .execute(new HttpCallBack<DiscoverListResult>() {
-
-                    @Override
-                    public void onSuccess(DiscoverListResult result) {
-
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-
-                    }
-                });
+//        HttpUtils.with(this).url("http://is.snssdk.com/2/essay/discovery/v3/")
+//                .addParam("iid", "6152551759")
+//                .addParam("aid", "7")
+//                .execute(new HttpCallBack<DiscoverListResult>() {
+//
+//                    @Override
+//                    public void onSuccess(DiscoverListResult result) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Exception e) {
+//
+//                    }
+//                });
 
     }
 
     @OnClick({R.id.test_iv, R.id.test_tv})
     @CheckNet   // 此方法需要check网络连接状态
     private void onClick(View view) {
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setContentView(R.layout.detail_comment_dialog)
-                .setText(R.id.submit_btn, "发送")
-                .fullWidth()
-                .fromBottom(true)
-                .show();
+//        AlertDialog dialog = new AlertDialog.Builder(this)
+//                .setContentView(R.layout.detail_comment_dialog)
+//                .setText(R.id.submit_btn, "发送")
+//                .fullWidth()
+//                .fromBottom(true)
+//                .show();
+//
+//        // Dialog去操作点击事件
+//        final EditText commitEt = dialog.getView(R.id.comment_editor);
+//        dialog.setOnclickListener(R.id.submit_btn,
+//                v -> Toast.makeText(MainActivity.this, commitEt.getText().toString().trim(), Toast.LENGTH_SHORT).show());
 
-        // Dialog去操作点击事件
-        final EditText commitEt = dialog.getView(R.id.comment_editor);
-        dialog.setOnclickListener(R.id.submit_btn,
-                v -> Toast.makeText(MainActivity.this, commitEt.getText().toString().trim(), Toast.LENGTH_SHORT).show());
+        startActivity(TestActivity.class);
 
     }
 }
