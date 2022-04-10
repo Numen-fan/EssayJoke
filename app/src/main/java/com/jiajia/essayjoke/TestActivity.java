@@ -25,9 +25,13 @@ import android.widget.Toast;
 
 import com.jiajia.baselibrary.fixbug.FixDexManager;
 import com.jiajia.framelibrary.BaseSkinActivity;
+import com.jiajia.framelibrary.db.DaoSupport;
 import com.jiajia.framelibrary.db.DaoSupportFactory;
+import com.jiajia.framelibrary.db.IDaoSupport;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestActivity extends BaseSkinActivity {
 
@@ -57,7 +61,12 @@ public class TestActivity extends BaseSkinActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 10086);
         } else {
 //                fixDexBug();
-            DaoSupportFactory.getFactory().getDao(Person.class);
+            IDaoSupport<Person> dao = DaoSupportFactory.getFactory().getDao(Person.class);
+
+            List<Person> list = dao.querySupport().selection("age > ?").selectionArgs("25").query();
+
+            System.out.println(list);
+
         }
     }
 

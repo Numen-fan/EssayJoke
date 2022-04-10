@@ -1,5 +1,9 @@
 package com.jiajia.framelibrary.db;
 
+import android.text.TextUtils;
+
+import java.util.Locale;
+
 /**
  * Created by Numen_fan on 2022/4/10
  * Desc:
@@ -29,5 +33,12 @@ public class DaoUtil {
 
     public static String getTableName(Class<?> clazz) {
         return clazz.getSimpleName();
+    }
+
+    public static String capitalize(String string) {
+        if (!TextUtils.isEmpty(string)) {
+            return string.substring(0, 1).toUpperCase(Locale.US) + string.substring(1);
+        }
+        return string == null ? null : "";
     }
 }
