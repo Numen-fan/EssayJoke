@@ -14,7 +14,7 @@ public interface IDaoSupport<T> {
 
     void init(SQLiteDatabase database, Class<T> clazz);
 
-    void insert(T object);
+    long insert(T object);
 
     /**
      * 批量插入

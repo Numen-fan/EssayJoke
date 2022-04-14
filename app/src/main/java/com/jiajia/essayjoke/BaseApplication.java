@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.jiajia.baselibrary.ExceptionCrashHandler;
 import com.jiajia.baselibrary.http.HttpUtils;
-import com.jiajia.baselibrary.http.OkHttpEngine;
+import com.jiajia.framelibrary.http.OkHttpEngine;
 
 /**
  * Created by Numen_fan on 2022/3/23

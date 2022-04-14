@@ -11,7 +11,7 @@ import java.util.Map;
 public interface EngineCallBack {
 
     // 开始执行，在执行之前的方法
-    public void onPreExecute(Context context, Map<String, Object> params);
+    void onPreExecute(Context context, Map<String, Object> params);
 
     // 错误
     void onError(Exception e);

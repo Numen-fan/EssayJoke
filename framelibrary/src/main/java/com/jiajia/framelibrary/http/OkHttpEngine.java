@@ -1,9 +1,16 @@
-package com.jiajia.baselibrary.http;
+package com.jiajia.framelibrary.http;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+
+import com.jiajia.baselibrary.http.EngineCallBack;
+import com.jiajia.baselibrary.http.HttpUtils;
+import com.jiajia.baselibrary.http.IHttpEngine;
+import com.jiajia.framelibrary.db.DaoSupportFactory;
+import com.jiajia.framelibrary.db.IDaoSupport;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,23 +31,36 @@ import okhttp3.Response;
 
 /**
  * Created by Numen_fan on 2022/4/5
- * Desc: OkHttp默认的引擎
+ * Desc: OkHttp引擎
  */
 public class OkHttpEngine implements IHttpEngine {
+
+    private static final String TAG = "OkHttpEngine";
 
     private static final OkHttpClient mOkHttpClient = new OkHttpClient();
 
     @Override
-    public void get(Context context, String url, Map<String, Object> params, final EngineCallBack callBack) {
+    public void get(Context context, String url, Map<String, Object> params, boolean cache, final EngineCallBack callBack) {
 
-        url = HttpUtils.jointParams(url, params);
+        final String queryUrl = HttpUtils.jointParams(url, params);
 
-        Log.e("Get请求路径：", url);
+        Log.e("Get请求路径：", queryUrl);
 
-        Request.Builder requestBuilder = new Request.Builder().url(url).tag(context);
+        // 1. 缓存判断
+        String cacheData = "";
+        if (cache) {
+            cacheData = CacheDataUtil.getCacheResultJson(queryUrl);
+            if (!TextUtils.isEmpty(cacheData)) {
+                Log.w(TAG, "有缓存数据");
+                callBack.onSuccess(cacheData); // 这个地方不能return，需要去查询最新的数据
+            }
+        }
+
+        Request.Builder requestBuilder = new Request.Builder().url(queryUrl).tag(context);
         //可以省略，默认是GET请求
         Request request = requestBuilder.build();
 
+        final String tempCacheData = cacheData;
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -53,15 +73,26 @@ public class OkHttpEngine implements IHttpEngine {
                     callBack.onSuccess("response body is null");
                     return;
                 }
+
                 String resultJson = Objects.requireNonNull(response.body()).string();
+
+                if (cache && !TextUtils.isEmpty(tempCacheData) && tempCacheData.equals(resultJson)) {
+                    Log.w(TAG, "和缓存数据一致");
+                    return;
+                }
+
+                // 执行成功方法
                 callBack.onSuccess(resultJson);
-                Log.e("Get返回结果：", resultJson);
+
+                if (cache) {
+
+                }
             }
         });
     }
 
     @Override
-    public void post(Context context, String url, Map<String, Object> params, final EngineCallBack callBack) {
+    public void post(Context context, String url, Map<String, Object> params, boolean cache, final EngineCallBack callBack) {
         final String jointUrl = HttpUtils.jointParams(url, params);  //打印
         Log.e("Post请求路径：", jointUrl);
 

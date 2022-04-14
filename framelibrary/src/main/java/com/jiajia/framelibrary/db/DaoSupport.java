@@ -71,8 +71,8 @@ public class DaoSupport<T> implements IDaoSupport<T> {
      * 插入任意类型
      */
     @Override
-    public void insert(T o) {
-        mSqliteDatabase.insert(DaoUtil.getTableName(o.getClass()), null, contentValuesByObj(o));
+    public long insert(T o) {
+       return mSqliteDatabase.insert(DaoUtil.getTableName(o.getClass()), null, contentValuesByObj(o));
     }
 
     /**

@@ -11,7 +11,7 @@ import java.util.Map;
  * Created by Numen_fan on 2022/4/5
  * Desc: 自己网络请求工具
  */
-public class HttpUtils{
+public class HttpUtils {
 
     private String mUrl;
     private int mType = GET;
@@ -24,13 +24,16 @@ public class HttpUtils{
     // 上下文
     private final Context mContext;
 
+    // 是否使用缓存
+    private boolean mCache = false;
+
     private HttpUtils(Context context) {
         this.mContext = context;
         mParams = new ArrayMap<>();
     }
 
     // 给一个默认的Engine
-    private static IHttpEngine mHttpEngine = new OkHttpEngine();
+    private static IHttpEngine mHttpEngine = null;
 
     // 初始化Engine
     public static void init(IHttpEngine httpEngine) {
@@ -65,6 +68,12 @@ public class HttpUtils{
 
     public HttpUtils get() {
         mType = GET;
+        return this;
+    }
+
+    // 是否使用缓存
+    public HttpUtils cache(boolean isCache) {
+        mCache = isCache;
         return this;
     }
 
@@ -106,12 +115,12 @@ public class HttpUtils{
     // ========== end of 链式调用 ============
 
     private void get(String url, Map<String, Object> params, EngineCallBack callBack) {
-        mHttpEngine.get(mContext,url, params, callBack);
+        mHttpEngine.get(mContext,url, params, mCache, callBack);
 
     }
 
     private void post(String url, Map<String, Object> params, EngineCallBack callBack) {
-        mHttpEngine.post(mContext, url, params, callBack);
+        mHttpEngine.post(mContext, url, params, mCache, callBack);
     }
 
     /**
@@ -141,9 +150,13 @@ public class HttpUtils{
 
     /**
      * 解析一个类上面的class信息
+     * 如果有泛型类信息，获取泛型的Class信息
      */
     public static Class<?> analysisClazzInfo(Object object) {
         Type genType = object.getClass().getGenericSuperclass();
+        if (genType == null) {
+            return object.getClass();
+        }
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
         return (Class<?>) params[0];
     }

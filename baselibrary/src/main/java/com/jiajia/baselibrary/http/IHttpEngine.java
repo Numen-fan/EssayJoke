@@ -12,10 +12,10 @@ public interface IHttpEngine {
 
     // get 请求
 
-    void get(Context context, String url, Map<String, Object> params, EngineCallBack callBack);
+    void get(Context context, String url, Map<String, Object> params, boolean cache, EngineCallBack callBack);
 
     // post 请求
-    void post(Context context, String url, Map<String, Object> params, EngineCallBack callBack);
+    void post(Context context, String url, Map<String, Object> params, boolean cache, EngineCallBack callBack);
 
     // download
 

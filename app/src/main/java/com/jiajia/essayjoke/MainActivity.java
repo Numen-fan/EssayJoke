@@ -1,25 +1,20 @@
 package com.jiajia.essayjoke;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.jiajia.baselibrary.dialog.AlertDialog;
-import com.jiajia.baselibrary.http.EngineCallBack;
 import com.jiajia.baselibrary.http.HttpUtils;
 import com.jiajia.baselibrary.ioc.CheckNet;
 import com.jiajia.baselibrary.ioc.OnClick;
 import com.jiajia.baselibrary.ioc.ViewById;
 import com.jiajia.essayjoke.mode.DiscoverListResult;
+import com.jiajia.essayjoke.mode.HomeMode;
 import com.jiajia.framelibrary.BaseSkinActivity;
 import com.jiajia.framelibrary.DefaultNavigationBar;
-import com.jiajia.framelibrary.HttpCallBack;
-
-import java.util.Map;
+import com.jiajia.baselibrary.http.BaseMode;
+import com.jiajia.framelibrary.http.HttpCallBack;
 
 public class MainActivity extends BaseSkinActivity {
 
@@ -57,22 +52,7 @@ public class MainActivity extends BaseSkinActivity {
     @Override
     protected void initData() {
 
-        // 路径 和 参数都需要放大JNI中，因为反编译会有问题
-//        HttpUtils.with(this).url("http://is.snssdk.com/2/essay/discovery/v3/")
-//                .addParam("iid", "6152551759")
-//                .addParam("aid", "7")
-//                .execute(new HttpCallBack<DiscoverListResult>() {
-//
-//                    @Override
-//                    public void onSuccess(DiscoverListResult result) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Exception e) {
-//
-//                    }
-//                });
+
 
     }
 
@@ -91,7 +71,25 @@ public class MainActivity extends BaseSkinActivity {
 //        dialog.setOnclickListener(R.id.submit_btn,
 //                v -> Toast.makeText(MainActivity.this, commitEt.getText().toString().trim(), Toast.LENGTH_SHORT).show());
 
-        startActivity(TestActivity.class);
+//        startActivity(TestActivity.class);
 
+        queryData();
+
+    }
+
+    private void queryData() {
+        // 路径 和 参数都需要放大JNI中，因为反编译会有问题
+        HttpUtils.with(this).url("https://www.wanandroid.com/article/list/0/json")
+                .cache(true).execute(new HttpCallBack<HomeMode>() {
+            @Override
+            public void onSuccess(HomeMode mode) {
+
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
     }
 }
