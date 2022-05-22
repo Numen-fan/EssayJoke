@@ -1,6 +1,9 @@
 package com.jiajia.essayjoke;
 
 import android.annotation.SuppressLint;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.os.Environment;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +18,9 @@ import com.jiajia.framelibrary.BaseSkinActivity;
 import com.jiajia.framelibrary.DefaultNavigationBar;
 import com.jiajia.baselibrary.http.BaseMode;
 import com.jiajia.framelibrary.http.HttpCallBack;
+
+import java.io.File;
+import java.lang.reflect.Method;
 
 public class MainActivity extends BaseSkinActivity {
 
@@ -56,7 +62,7 @@ public class MainActivity extends BaseSkinActivity {
 
     }
 
-    @OnClick({R.id.test_iv, R.id.test_tv})
+    @OnClick(R.id.test_iv)
     @CheckNet   // 此方法需要check网络连接状态
     private void onClick(View view) {
 //        AlertDialog dialog = new AlertDialog.Builder(this)
@@ -73,8 +79,15 @@ public class MainActivity extends BaseSkinActivity {
 
 //        startActivity(TestActivity.class);
 
-        queryData();
+        startActivity(SkinTestActivity.class);
 
+//        queryData();
+
+    }
+
+    @OnClick(R.id.test_tv)
+    private void tvClick(View view) {
+        startActivity(TestActivity.class);
     }
 
     private void queryData() {
