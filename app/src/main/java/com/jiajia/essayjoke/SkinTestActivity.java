@@ -42,8 +42,6 @@ public class SkinTestActivity extends BaseSkinActivity {
         findViewById(R.id.btn_skin_turn).setOnClickListener(v -> {
             startActivity(SkinTestActivity.class); // 跳转自己
         });
-
-
     }
 
     @Override

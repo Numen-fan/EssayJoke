@@ -12,8 +12,10 @@ import androidx.core.view.LayoutInflaterCompat;
 
 import com.jiajia.baselibrary.base.BaseActivity;
 import com.jiajia.framelibrary.skin.SkinManager;
+import com.jiajia.framelibrary.skin.SkinResource;
 import com.jiajia.framelibrary.skin.attr.SkinAttr;
 import com.jiajia.framelibrary.skin.SkinView;
+import com.jiajia.framelibrary.skin.callback.ISkinChangeListener;
 import com.jiajia.framelibrary.skin.support.SkinAppCompatViewInflater;
 import com.jiajia.framelibrary.skin.support.SkinAttrSupport;
 
@@ -24,7 +26,7 @@ import java.util.List;
  * Created by Numen_fan on 2022/3/17
  * Desc:
  */
-public abstract class BaseSkinActivity extends BaseActivity implements LayoutInflater.Factory2 {
+public abstract class BaseSkinActivity extends BaseActivity implements LayoutInflater.Factory2, ISkinChangeListener {
 
     // 后面的插件换肤 预留的东西
 
@@ -58,9 +60,18 @@ public abstract class BaseSkinActivity extends BaseActivity implements LayoutInf
             // 3 统一交给SkinManager管理
             manageSkinView(skinView);
 
+            // 4 判断一下是否需要换肤
+            SkinManager.getInstance().checkChangeSkin(skinView);
+
         }
 
         return view;
+    }
+
+    @Override
+    public void changeSkin(SkinResource skinResource) {
+        // 在=做一些第三方的改变，比如这个页面使用了第三方的view
+
     }
 
     /**
@@ -90,6 +101,10 @@ public abstract class BaseSkinActivity extends BaseActivity implements LayoutInf
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-
+        SkinManager.getInstance().unregister(this);
+    }
 }

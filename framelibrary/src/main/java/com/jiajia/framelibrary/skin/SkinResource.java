@@ -41,7 +41,7 @@ public class SkinResource {
                     skinPath, PackageManager.GET_ACTIVITIES).applicationInfo.packageName;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "SkinResource error" + e.getMessage());
         }
 
     }
@@ -54,8 +54,7 @@ public class SkinResource {
     public Drawable getDrawableByName(String resName) {
         try {
             int resId = mSkinResource.getIdentifier(resName, "drawable", mPackageName);
-            Drawable drawable = mSkinResource.getDrawable(resId);
-            return drawable;
+            return ResourcesCompat.getDrawable(mSkinResource, resId, null);
         } catch (Exception e) {
             Log.e(TAG, "getDrawableByName error" + e.getMessage());
             return null;
@@ -66,8 +65,7 @@ public class SkinResource {
     public ColorStateList getColorByName(String resName) {
         try {
             int resId = mSkinResource.getIdentifier(resName, "color", mPackageName);
-            ColorStateList colors = mSkinResource.getColorStateList(resId);
-            return colors;
+            return ResourcesCompat.getColorStateList(mSkinResource, resId, null);
         } catch (Exception e) {
             Log.e(TAG, "getColorByName error" + e.getMessage());
             return null;
