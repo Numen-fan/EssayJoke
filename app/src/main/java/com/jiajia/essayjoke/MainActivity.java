@@ -1,9 +1,14 @@
 package com.jiajia.essayjoke;
 
 import android.annotation.SuppressLint;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Environment;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +34,21 @@ public class MainActivity extends BaseSkinActivity {
     @SuppressLint("NonConstantResourceId")
     @ViewById(R.id.test_tv)
     private TextView mTestTv;
+
+    // 客户端一定要获取这个实例
+    private  UserAidl mUserAidl;
+    private ServiceConnection mServiceConn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            // 建立链接
+            mUserAidl = UserAidl.Stub.asInterface(service);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            // 断开链接
+        }
+    };
 
     @Override
     protected int getLayoutId() {
@@ -58,7 +78,13 @@ public class MainActivity extends BaseSkinActivity {
     @Override
     protected void initData() {
 
+        // 启动服务端
+        startService(new Intent(this, MessageService.class));
 
+        // 客户端去绑定
+        // 如果是在其它APP内调用，就使用隐式调用， 设置action和包名
+        Intent intent = new Intent(this, MessageService.class);
+        bindService(intent, mServiceConn, Context.BIND_AUTO_CREATE);
 
     }
 
@@ -88,6 +114,16 @@ public class MainActivity extends BaseSkinActivity {
     @OnClick(R.id.test_tv)
     private void tvClick(View view) {
         startActivity(TestActivity.class);
+    }
+
+
+    @OnClick(R.id.btn_get_info)
+    private void getInfo(View view) {
+        try {
+            Toast.makeText(this, mUserAidl.getUserName() + "," + mUserAidl.getUserPwd(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void queryData() {
