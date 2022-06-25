@@ -36,12 +36,10 @@ public class MainActivity extends BaseSkinActivity {
     private TextView mTestTv;
 
     // 客户端一定要获取这个实例
-    private  UserAidl mUserAidl;
     private ServiceConnection mServiceConn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             // 建立链接
-            mUserAidl = UserAidl.Stub.asInterface(service);
         }
 
         @Override
@@ -80,11 +78,7 @@ public class MainActivity extends BaseSkinActivity {
 
         // 启动服务端
         startService(new Intent(this, MessageService.class));
-
-        // 客户端去绑定
-        // 如果是在其它APP内调用，就使用隐式调用， 设置action和包名
-        Intent intent = new Intent(this, MessageService.class);
-        bindService(intent, mServiceConn, Context.BIND_AUTO_CREATE);
+        startService(new Intent(this, GuardService.class));
 
     }
 
@@ -120,7 +114,7 @@ public class MainActivity extends BaseSkinActivity {
     @OnClick(R.id.btn_get_info)
     private void getInfo(View view) {
         try {
-            Toast.makeText(this, mUserAidl.getUserName() + "," + mUserAidl.getUserPwd(), Toast.LENGTH_SHORT).show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
