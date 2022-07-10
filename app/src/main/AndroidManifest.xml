@@ -23,18 +23,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <service
             android:name=".MessageService"
             android:enabled="true"
-            android:exported="true">
-        </service>
-
+            android:exported="true" />
         <service
             android:name=".GuardService"
-            android:process=":guardService"
             android:enabled="true"
-            android:exported="true">
-        </service>
+            android:exported="true"
+            android:process=":guardService" />
 
         <activity
             android:name=".SkinTestActivity"
@@ -42,15 +53,6 @@
         <activity
             android:name=".TestActivity"
             android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

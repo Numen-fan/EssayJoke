@@ -41,6 +41,10 @@ public abstract class AbsNavigationBar<P extends AbsNavigationBar.Builder.AbsNav
         }
     }
 
+    public void setViewVisibility(int viewId, int visible) {
+        findViewById(viewId).setVisibility(visible);
+    }
+
     public <T extends View> T findViewById(int viewId) {
         return mNavigationView.findViewById(viewId);
     }
@@ -87,7 +91,7 @@ public abstract class AbsNavigationBar<P extends AbsNavigationBar.Builder.AbsNav
         }
 
 
-        public abstract AbsNavigationBar builder();
+        public abstract AbsNavigationBar build();
 
 
         public static class AbsNavigationBarParams {

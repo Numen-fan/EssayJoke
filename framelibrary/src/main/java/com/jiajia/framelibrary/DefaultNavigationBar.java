@@ -33,6 +33,7 @@ public class DefaultNavigationBar extends AbsNavigationBar<DefaultNavigationBar.
         // 设置左边icon的点击事件
         setOnClickListener(R.id.back, getParams().mLeftOnClickListener);
 
+        setViewVisibility(R.id.back, getParams().leftIconVisible);
 
     }
 
@@ -56,7 +57,7 @@ public class DefaultNavigationBar extends AbsNavigationBar<DefaultNavigationBar.
         }
 
 
-        public DefaultNavigationBar builder() {
+        public DefaultNavigationBar build() {
             DefaultNavigationBar navigationBar = new DefaultNavigationBar(P);
             return navigationBar;
         }
@@ -87,6 +88,11 @@ public class DefaultNavigationBar extends AbsNavigationBar<DefaultNavigationBar.
             return this;
         }
 
+        public DefaultNavigationBar.Builder hideLeftIcon() {
+            P.leftIconVisible = View.INVISIBLE;
+            return this;
+        }
+
         /**
          * 设置右侧view的点击事件
          */
@@ -113,6 +119,7 @@ public class DefaultNavigationBar extends AbsNavigationBar<DefaultNavigationBar.
             public String mTitle;
             public String mRightTitle;
             public int mRightIconResId;
+            public int leftIconVisible = View.VISIBLE;
             public View.OnClickListener mRightClickListener;
             // 默认back为关闭此页面
             public View.OnClickListener mLeftOnClickListener = v -> ((Activity) mContext).finish();
