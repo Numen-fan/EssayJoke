@@ -1,9 +1,12 @@
 package com.jiajia.framelibrary.http;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 
 import com.jiajia.baselibrary.http.EngineCallBack;
@@ -39,6 +42,8 @@ public class OkHttpEngine implements IHttpEngine {
 
     private static final OkHttpClient mOkHttpClient = new OkHttpClient();
 
+    private static Handler mHandler = new Handler(Looper.getMainLooper());
+
     @Override
     public void get(Context context, String url, Map<String, Object> params, boolean cache, final EngineCallBack callBack) {
 
@@ -52,7 +57,8 @@ public class OkHttpEngine implements IHttpEngine {
             cacheData = CacheDataUtil.getCacheResultJson(queryUrl);
             if (!TextUtils.isEmpty(cacheData)) {
                 Log.w(TAG, "有缓存数据");
-                callBack.onSuccess(cacheData); // 这个地方不能return，需要去查询最新的数据
+                String finalCacheData = cacheData;
+                mHandler.post(()->callBack.onSuccess(finalCacheData)); // 这个地方不能return，需要去查询最新的数据
             }
         }
 
@@ -64,13 +70,13 @@ public class OkHttpEngine implements IHttpEngine {
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                callBack.onError(e);
+                mHandler.post(()->callBack.onError(e));
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.body() == null) {
-                    callBack.onSuccess("response body is null");
+                    callBack.onFail("response body is null");
                     return;
                 }
 
@@ -82,10 +88,10 @@ public class OkHttpEngine implements IHttpEngine {
                 }
 
                 // 执行成功方法
-                callBack.onSuccess(resultJson);
+                mHandler.post(() -> callBack.onSuccess(resultJson));
 
                 if (cache) {
-
+                    CacheDataUtil.updateCacheData(url, resultJson);
                 }
             }
         });

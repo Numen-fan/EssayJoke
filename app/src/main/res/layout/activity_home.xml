@@ -32,19 +32,19 @@
             android:id="@+id/find_rb"
             style="@style/home_bottom_tab_style"
             android:drawableTop="@drawable/ic_tab_discovery"
-            android:text="发现" />
+            android:text="广场" />
 
         <RadioButton
-            android:id="@+id/new_rb"
+            android:id="@+id/public_count_rb"
             style="@style/home_bottom_tab_style"
             android:drawableTop="@drawable/ic_tab_fresh"
-            android:text="新鲜" />
+            android:text="公众号" />
 
         <RadioButton
-            android:id="@+id/message_rb"
+            android:id="@+id/practise_rb"
             style="@style/home_bottom_tab_style"
             android:drawableTop="@drawable/ic_tab_msg"
-            android:text="消息" />
+            android:text="项目" />
     </RadioGroup>
 
 </LinearLayout>

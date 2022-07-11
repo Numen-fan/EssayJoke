@@ -5,7 +5,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:text="新鲜"
+        android:text="项目"
         android:gravity="center"
         android:layout_height="match_parent" />
 </RelativeLayout>

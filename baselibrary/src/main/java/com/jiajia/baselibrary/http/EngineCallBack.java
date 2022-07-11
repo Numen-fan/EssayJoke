@@ -19,6 +19,8 @@ public interface EngineCallBack {
     // 成功
     void onSuccess(String result);
 
+    void onFail(String msg);
+
     // 默认的
     EngineCallBack DEFAULT_CALLBACK = new EngineCallBack() {
 
@@ -34,6 +36,11 @@ public interface EngineCallBack {
 
         @Override
         public void onSuccess(String result) {
+
+        }
+
+        @Override
+        public void onFail(String msg) {
 
         }
     };

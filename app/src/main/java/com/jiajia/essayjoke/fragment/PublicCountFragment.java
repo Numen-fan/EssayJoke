@@ -6,7 +6,7 @@ import com.jiajia.essayjoke.R;
 /**
  * Created by Administrator on 2016/12/3.
  */
-public class MessageFragment extends BaseFragment {
+public class PublicCountFragment extends BaseFragment {
 
     @Override
     protected void initView() {

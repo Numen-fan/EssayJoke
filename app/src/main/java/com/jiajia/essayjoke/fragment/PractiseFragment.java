@@ -7,7 +7,7 @@ import com.jiajia.essayjoke.R;
 /**
  * Created by Administrator on 2016/12/3.
  */
-public class NewFragment extends BaseFragment {
+public class PractiseFragment extends BaseFragment {
 
     @Override
     protected void initView() {

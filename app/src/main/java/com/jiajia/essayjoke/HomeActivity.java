@@ -1,16 +1,14 @@
 package com.jiajia.essayjoke;
 
 import android.view.View;
-import android.widget.ImageView;
 
 import com.jiajia.baselibrary.ioc.OnClick;
 import com.jiajia.baselibrary.ioc.ViewById;
 import com.jiajia.essayjoke.fragment.FindFragment;
 import com.jiajia.essayjoke.fragment.HomeFragment;
-import com.jiajia.essayjoke.fragment.MessageFragment;
-import com.jiajia.essayjoke.fragment.NewFragment;
+import com.jiajia.essayjoke.fragment.PublicCountFragment;
+import com.jiajia.essayjoke.fragment.PractiseFragment;
 import com.jiajia.framelibrary.BaseSkinActivity;
-import com.jiajia.framelibrary.DefaultNavigationBar;
 
 /**
  *
@@ -19,8 +17,8 @@ public class HomeActivity extends BaseSkinActivity {
 
     private HomeFragment mHomeFragment;
     private FindFragment mFindFragment;
-    private NewFragment mNewFragment;
-    private MessageFragment mMessageFragment;
+    private PractiseFragment mPractiseFragment;
+    private PublicCountFragment mPublicCountFragment;
 
     private FragmentManagerHelper mFragmentHelper;
 
@@ -30,11 +28,11 @@ public class HomeActivity extends BaseSkinActivity {
     @ViewById(R.id.find_rb)
     private View btnFind;
 
-    @ViewById(R.id.new_rb)
-    private View btnNew;
+    @ViewById(R.id.public_count_rb)
+    private View btnPublic;
 
-    @ViewById(R.id.message_rb)
-    private View btnMessage;
+    @ViewById(R.id.practise_rb)
+    private View btnPractise;
 
 
     @Override
@@ -87,19 +85,19 @@ public class HomeActivity extends BaseSkinActivity {
         mFragmentHelper.switchFragment(mFindFragment);
     }
 
-    @OnClick(R.id.new_rb)
+    @OnClick(R.id.public_count_rb)
     private void newRbClick(View view) {
-        if (mNewFragment == null) {
-            mNewFragment = new NewFragment();
+        if (mPublicCountFragment == null) {
+            mPublicCountFragment = new PublicCountFragment();
         }
-        mFragmentHelper.switchFragment(mNewFragment);
+        mFragmentHelper.switchFragment(mPublicCountFragment);
     }
 
-    @OnClick(R.id.message_rb)
+    @OnClick(R.id.practise_rb)
     private void messageRbClick(View view) {
-        if (mMessageFragment == null) {
-            mMessageFragment = new MessageFragment();
+        if (mPractiseFragment == null) {
+            mPractiseFragment = new PractiseFragment();
         }
-        mFragmentHelper.switchFragment(mMessageFragment);
+        mFragmentHelper.switchFragment(mPractiseFragment);
     }
 }
