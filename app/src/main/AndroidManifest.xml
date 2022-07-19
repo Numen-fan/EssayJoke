@@ -38,20 +38,20 @@
         </activity>
 
         <service
-            android:name=".MessageService"
+            android:name=".guardservice.MessageService"
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name=".GuardService"
+            android:name=".guardservice.GuardService"
             android:enabled="true"
             android:exported="true"
             android:process=":guardService" />
 
         <activity
-            android:name=".SkinTestActivity"
+            android:name=".test.SkinTestActivity"
             android:exported="false" />
         <activity
-            android:name=".TestActivity"
+            android:name=".test.TestActivity"
             android:exported="false" />
     </application>
 

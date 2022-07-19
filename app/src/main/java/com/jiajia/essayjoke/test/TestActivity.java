@@ -1,4 +1,4 @@
-package com.jiajia.essayjoke;
+package com.jiajia.essayjoke.test;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.jiajia.baselibrary.fixbug.FixDexManager;
 import com.jiajia.baselibrary.ioc.ViewById;
+import com.jiajia.essayjoke.R;
 import com.jiajia.framelibrary.BaseSkinActivity;
 import com.jiajia.framelibrary.db.DaoSupport;
 import com.jiajia.framelibrary.db.DaoSupportFactory;

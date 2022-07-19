@@ -20,7 +20,7 @@ public class CacheDataUtil {
         List<CacheData> cacheDataList = daoSupport.querySupport().selection("mUrlKey=?").selectionArgs(queryUrl).query();
         if (cacheDataList.size() > 0) {
             CacheData cacheData = cacheDataList.get(0);
-            String resultJson = cacheData.getmResultJson();
+            String resultJson = cacheData.getResultJson();
             if (!TextUtils.isEmpty(resultJson)) {
                 return resultJson;
             }

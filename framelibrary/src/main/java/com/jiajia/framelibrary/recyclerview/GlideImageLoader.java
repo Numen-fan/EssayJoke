@@ -1,9 +1,10 @@
-package com.jiajia.essayjoke;
+package com.jiajia.framelibrary.recyclerview;
 
 import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.jiajia.framelibrary.R;
 import com.jiajia.framelibrary.recyclerview.adapter.ViewHolder;
 
 

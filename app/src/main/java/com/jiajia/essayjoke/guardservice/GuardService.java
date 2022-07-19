@@ -1,4 +1,4 @@
-package com.jiajia.essayjoke;
+package com.jiajia.essayjoke.guardservice;
 
 import android.app.Notification;
 import android.app.Service;
@@ -11,6 +11,8 @@ import android.os.RemoteException;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.jiajia.essayjoke.ProcessConnection;
 
 /**
  * Created by Numen_fan on 2022/6/23

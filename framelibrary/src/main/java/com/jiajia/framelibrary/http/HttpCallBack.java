@@ -53,6 +53,19 @@ public abstract class HttpCallBack<T> implements EngineCallBack {
         }
 
     }
+
+    @Override
+    public void onFail(String msg) {
+        onFailed(msg);
+    }
+
+    @Override
+    public void onError(Exception e) {
+        onFailed("接口处理异常");
+    }
+
     // 返回直接可以操作的对象
     public abstract void onSuccess(T result);
+
+    public abstract void onFailed(String msg);
 }

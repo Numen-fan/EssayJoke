@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ViewHolder extends RecyclerView.ViewHolder {
 
     // 用来存放子View减少findViewById的次数
-    private SparseArray<View> mViews;
+    private final SparseArray<View> mViews;
 
     public ViewHolder(View itemView) {
         super(itemView);
@@ -66,14 +66,14 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     /**
      * 设置条目点击事件
      */
-    public void setOnIntemClickListener(View.OnClickListener listener) {
+    public void setOnItemClickListener(View.OnClickListener listener) {
         itemView.setOnClickListener(listener);
     }
 
     /**
      * 设置条目长按事件
      */
-    public void setOnIntemLongClickListener(View.OnLongClickListener listener) {
+    public void setOnItemLongClickListener(View.OnLongClickListener listener) {
         itemView.setOnLongClickListener(listener);
     }
 

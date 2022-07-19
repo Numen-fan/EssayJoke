@@ -1,7 +1,8 @@
-package com.jiajia.essayjoke;
+package com.jiajia.essayjoke.test;
 
 import android.os.Environment;
 
+import com.jiajia.essayjoke.R;
 import com.jiajia.framelibrary.BaseSkinActivity;
 import com.jiajia.framelibrary.skin.SkinManager;
 

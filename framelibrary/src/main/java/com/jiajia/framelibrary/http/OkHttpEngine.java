@@ -42,14 +42,14 @@ public class OkHttpEngine implements IHttpEngine {
 
     private static final OkHttpClient mOkHttpClient = new OkHttpClient();
 
-    private static Handler mHandler = new Handler(Looper.getMainLooper());
+    private static final Handler mHandler = new Handler(Looper.getMainLooper());
 
     @Override
     public void get(Context context, String url, Map<String, Object> params, boolean cache, final EngineCallBack callBack) {
 
         final String queryUrl = HttpUtils.jointParams(url, params);
 
-        Log.e("Get请求路径：", queryUrl);
+        Log.w("Get请求路径：", queryUrl);
 
         // 1. 缓存判断
         String cacheData = "";
@@ -81,6 +81,8 @@ public class OkHttpEngine implements IHttpEngine {
                 }
 
                 String resultJson = Objects.requireNonNull(response.body()).string();
+
+                Log.w(TAG, resultJson);
 
                 if (cache && !TextUtils.isEmpty(tempCacheData) && tempCacheData.equals(resultJson)) {
                     Log.w(TAG, "和缓存数据一致");

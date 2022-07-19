@@ -19,19 +19,19 @@ public class CacheData {
         this.mResultJson = resultJson;
     }
 
-    public String getmUrlKey() {
+    public String getUrlKey() {
         return mUrlKey;
     }
 
-    public void setmUrlKey(String mUrlKey) {
+    public void setUrlKey(String mUrlKey) {
         this.mUrlKey = mUrlKey;
     }
 
-    public String getmResultJson() {
+    public String getResultJson() {
         return mResultJson;
     }
 
-    public void setmResultJson(String mResultJson) {
+    public void setResultJson(String mResultJson) {
         this.mResultJson = mResultJson;
     }
 

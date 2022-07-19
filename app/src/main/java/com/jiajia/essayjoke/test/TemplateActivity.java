@@ -1,4 +1,4 @@
-package com.jiajia.essayjoke;
+package com.jiajia.essayjoke.test;
 
 import com.jiajia.baselibrary.http.HttpUtils;
 import com.jiajia.framelibrary.BaseSkinActivity;

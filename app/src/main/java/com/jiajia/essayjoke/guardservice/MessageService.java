@@ -1,4 +1,4 @@
-package com.jiajia.essayjoke;
+package com.jiajia.essayjoke.guardservice;
 
 import android.app.Notification;
 import android.app.Service;
@@ -8,8 +8,9 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.util.Log;
 import android.widget.Toast;
+
+import com.jiajia.essayjoke.ProcessConnection;
 
 public class MessageService extends Service {
 

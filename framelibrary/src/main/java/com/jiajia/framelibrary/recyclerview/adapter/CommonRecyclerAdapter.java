@@ -42,7 +42,7 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<View
     }
 
     /**
-     * 根据当前位置获取不同的viewType
+     * 根据当前位置获取不同的viewType, 注意这里返回的不是一个type，而是布局资源id
      */
     @Override
     public int getItemViewType(int position) {
@@ -70,20 +70,10 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<View
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         // 设置点击和长按事件
         if (mItemClickListener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mItemClickListener.onItemClick(holder.getAdapterPosition());
-                }
-            });
+            holder.itemView.setOnClickListener(v -> mItemClickListener.onItemClick(holder.getAdapterPosition()));
         }
         if (mLongClickListener != null) {
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    return mLongClickListener.onLongClick(holder.getAdapterPosition());
-                }
-            });
+            holder.itemView.setOnLongClickListener(v -> mLongClickListener.onLongClick(holder.getAdapterPosition()));
         }
 
         // 绑定怎么办？回传出去

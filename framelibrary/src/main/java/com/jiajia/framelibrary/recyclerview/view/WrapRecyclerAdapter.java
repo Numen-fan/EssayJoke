@@ -5,6 +5,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,8 +29,8 @@ public class WrapRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
      * auto-boxing keys and its data structure doesn't rely on an extra entry object
      * for each mapping.
      */
-    private SparseArray<View> mHeaderViews;
-    private SparseArray<View> mFooterViews;
+    private final SparseArray<View> mHeaderViews;
+    private final SparseArray<View> mFooterViews;
 
     // 基本的头部类型开始位置  用于viewType
     private static int BASE_ITEM_TYPE_HEADER = 10000000;
@@ -45,8 +46,9 @@ public class WrapRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         mFooterViews = new SparseArray<>();
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         // viewType 可能就是 SparseArray 的key
         if (isHeaderViewType(viewType)) {
