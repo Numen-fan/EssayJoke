@@ -1,12 +1,14 @@
 package com.jiajia.essayjoke.selectimage;
 
 
-import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.TextView;
@@ -15,7 +17,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
+import androidx.core.os.EnvironmentCompat;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -28,12 +31,17 @@ import com.jiajia.essayjoke.R;
 import com.jiajia.framelibrary.BaseSkinActivity;
 import com.jiajia.framelibrary.DefaultNavigationBar;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * 图片选择器
  */
-public class SelectImageActivity extends BaseSkinActivity {
+public class SelectImageActivity extends BaseSkinActivity implements SelectImageListener {
 
     private static final String TAG = "SelectImageActivity";
 
@@ -49,6 +57,7 @@ public class SelectImageActivity extends BaseSkinActivity {
     // 返回选择图片列表的EXTRA_KEY
     public static final String EXTRA_RESULT = "EXTRA_RESULT";
 
+    private static final String pictureFileBasePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator;
 
     // 加载所有的数据
     private static final int LOADER_TYPE = 0x0021;
@@ -82,11 +91,18 @@ public class SelectImageActivity extends BaseSkinActivity {
     @ViewById(R.id.select_finish)
     private View btnSelectFinish;
 
-    private final ActivityResultLauncher<String> resultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
-        if (result) {
-            initImageList();
-        }
-    });
+    private ActivityResultLauncher<Intent> takePhotoLauncher;
+
+    private String picturePath = null;
+
+    //用于保存拍照图片的uri,android 10以上
+    private Uri mCameraUri;
+
+    // 用于保存图片的文件路径，Android 10以下使用图片路径访问图片
+    private String mCameraImagePath;
+
+
+    private  final ArrayList<String> images = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -103,12 +119,32 @@ public class SelectImageActivity extends BaseSkinActivity {
     @Override
     protected void initView() {
 
+
     }
 
     @Override
     protected void initListener() {
 
+        // 注册拍照launcher
+        takePhotoLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result == null || result.getResultCode() != RESULT_OK) {
+                return;
+            }
 
+            // 拍照成功
+            int insertIndex = mShowCamera ? 1 : 0; // 在最前面
+            String path = getUriPath();
+            images.add(insertIndex, path);
+            mResultList.add(path);
+        });
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadImages();
     }
 
     @Override
@@ -124,12 +160,14 @@ public class SelectImageActivity extends BaseSkinActivity {
             mResultList = new ArrayList<>();
         }
 
-        // 2 加载本地图片数据
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            resultLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
-        } else {
-            initImageList();
+        if (mShowCamera) {
+            images.add("");
         }
+    }
+
+    private void loadImages() {
+        // 2 加载本地图片数据
+        initImageList();
 
         // 3 改变显示
         exchangeViewShow();
@@ -202,12 +240,8 @@ public class SelectImageActivity extends BaseSkinActivity {
                 public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
                     // 解析，封装到集合  只保存String路径
                     if (data != null && data.getCount() > 0) {
-                        ArrayList<String> images = new ArrayList<>();
 
-                        // 如果需要显示拍照，就在第一个位置上加一个空String
-                        if(mShowCamera){
-                            images.add("");
-                        }
+                        data.moveToFirst();
 
                         // 不断的遍历循环
                         while (data.moveToNext()) {
@@ -233,8 +267,88 @@ public class SelectImageActivity extends BaseSkinActivity {
     private void showImageList(ArrayList<String> images) {
         SelectImageListAdapter listAdapter = new SelectImageListAdapter(this, images, mResultList);
         mImageListRv.setLayoutManager(new GridLayoutManager(this, 4));
-        listAdapter.setSelectListener(this::exchangeViewShow);
+        listAdapter.setSelectListener(this);
         mImageListRv.setAdapter(listAdapter);
+    }
+
+
+    @Override
+    public void select() {
+        exchangeViewShow();
+    }
+
+    @Override
+    public void takePhoto() {
+        // 调起相近进行拍照，此时已经活得了相机的权限
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        picturePath = pictureFileBasePath + "IMG_" + System.currentTimeMillis() + ".jpg";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // Android 10 适配
+            mCameraUri = createImageUri();
+        } else {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (photoFile != null) {
+                mCameraImagePath = photoFile.getAbsolutePath();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    //适配Android 7.0文件权限，通过FileProvider创建一个content类型的Uri
+                    mCameraUri = FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", photoFile);
+                } else {
+                    mCameraUri = Uri.fromFile(photoFile);
+                }
+            }
+        }
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mCameraUri);
+        takePhotoLauncher.launch(intent);
+    }
+
+    /**
+     * 创建图片地址uri,用于保存拍照后的照片 Android 10以后使用这种方法
+     */
+    private Uri createImageUri() {
+        String status = Environment.getExternalStorageState();
+        // 判断是否有SD卡,优先使用SD卡存储,当没有SD卡时使用手机存储
+        if (status.equals(Environment.MEDIA_MOUNTED)) {
+            return getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
+        } else {
+            return getContentResolver().insert(MediaStore.Images.Media.INTERNAL_CONTENT_URI, new ContentValues());
+        }
+    }
+
+    /**
+     * 创建保存图片的文件
+     */
+    private File createImageFile() throws IOException {
+        String imageName = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (!storageDir.exists()) {
+            storageDir.mkdir();
+        }
+        File tempFile = new File(storageDir, imageName);
+        if (!Environment.MEDIA_MOUNTED.equals(EnvironmentCompat.getStorageState(tempFile))) {
+            return null;
+        }
+        return tempFile;
+    }
+
+    // 从uri中解析出path
+    private String getUriPath() {
+        String path = "";
+        Cursor cursor = getContentResolver().query(mCameraUri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                if (columnIndex > -1) {
+                    path = cursor.getString(columnIndex);
+                }
+            }
+            cursor.close();
+        }
+        return path;
     }
 
 }

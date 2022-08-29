@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * Email 240336124@qq.com
- * Created by Darren on 2017/4/9.
+ * Created by Darren on 2017/4/9. 
  * Version 1.0
  * Description:
  */
@@ -40,6 +40,9 @@ public class SelectImageListAdapter extends CommonRecyclerAdapter<String> {
             holder.setViewVisibility(R.id.camera_ll, View.VISIBLE);
             holder.setViewVisibility(R.id.media_selected_indicator, View.INVISIBLE);
             holder.setViewVisibility(R.id.image, View.INVISIBLE);
+            holder.itemView.setOnClickListener(v -> {
+                listener.takePhoto();
+            });
         }else{
             // 显示图片
             holder.setViewVisibility(R.id.camera_ll, View.INVISIBLE);
