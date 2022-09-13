@@ -12,8 +12,7 @@
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".BaseApplication"
@@ -25,6 +24,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<!--        <activity-->
+<!--            android:name=".test.TestPluglnActivity"-->
+<!--            android:exported="false" />-->
+        <activity
+            android:name=".activity.ProxyActivity"
+            android:exported="false" />
         <activity
             android:name=".selectimage.SelectImageActivity"
             android:exported="false" />

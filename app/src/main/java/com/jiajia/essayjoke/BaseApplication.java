@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.jiajia.baselibrary.ExceptionCrashHandler;
 import com.jiajia.baselibrary.http.HttpUtils;
+import com.jiajia.essayjoke.activity.ProxyActivity;
+import com.jiajia.essayjoke.utils.HookStartActivityUtil;
 import com.jiajia.framelibrary.http.OkHttpEngine;
 import com.jiajia.framelibrary.skin.SkinManager;
 
@@ -22,6 +24,11 @@ public class BaseApplication extends Application {
         SkinManager.getInstance().init(this);
 
         ExceptionCrashHandler.getInstance().init(this);
-
+        HookStartActivityUtil hookStartActivityUtil = new HookStartActivityUtil(this, ProxyActivity.class);
+        try {
+            hookStartActivityUtil.hookStartActivity();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

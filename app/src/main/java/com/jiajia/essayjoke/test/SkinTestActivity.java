@@ -58,7 +58,10 @@ public class SkinTestActivity extends BaseSkinActivity {
             String skinPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "red.skin";
 //            SkinManager.getInstance().loadSkin(skinPath);
 
-            selectImage();
+            // 图片选择器
+//            selectImage();
+
+            startActivity(TestPluglnActivity.class);
 
 
         });
